@@ -121,7 +121,7 @@ func main() {
     //get compartment id from env as defaultconfigprovider don't have info	
 //	compartmentID := os.Getenv("OCI_COMPARTMENT_ID")
     Bucketname := flag.String("bucketname", "", "The name of bucket for file to upload ")
-	Filename := flag.String("filename", "", "The full path of files to be uploaded, wildcard can used ie: upload_files -bucketname testaa -filename \"filenam**\" ")
+	Filename := flag.String("filename", "", "The full path of files to be uploaded, wildcard can used ie: upload_files -bucketname testaa -filename \"filename*\" ")
 	flag.Parse()
 	o, err := objectstorage.NewObjectStorageClientWithConfigurationProvider(common.DefaultConfigProvider())
 	if err != nil {
