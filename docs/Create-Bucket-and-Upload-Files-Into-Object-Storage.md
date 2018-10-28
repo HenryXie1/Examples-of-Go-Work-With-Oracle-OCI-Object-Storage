@@ -1,4 +1,4 @@
-# Go OCI SDK Create Bucket and Upload Files Into OCI Object Storage
+# Go OCI SDK Create Bucket and Upload Multiple Files Into OCI Object Storage
 
 ###  Requirement:
 We need to install [Go programming language](https://golang.org/dl/) in your host.
@@ -75,7 +75,7 @@ func main() {
 }
 ```
 
-####  Upload files into the bucket example:
+####  Upload multiple files into the bucket example:
 ```
 package main
 import (
@@ -132,7 +132,7 @@ func main() {
 	ctx := context.Background()
 	namespace := getNamespace(ctx, o)
 	if *Bucketname == "" || *Filename =="" { 
-	  fmt.Println("No bucketname or No filename is given, upload_file -h to see help")
+	  fmt.Println("No bucketname or No filename is given, upload_files -h to see help")
 	  return
 	  } else {
 	  fmt.Printf("You are going to upload file %s in bucket: %s\n",*Filename,*Bucketname)
