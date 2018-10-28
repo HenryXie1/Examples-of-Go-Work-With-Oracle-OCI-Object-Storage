@@ -78,7 +78,6 @@ func main() {
 ####  Upload files into the bucket example:
 ```
 package main
-
 import (
 	"context"
     "os"
@@ -118,14 +117,11 @@ func putObject(ctx context.Context, c objectstorage.ObjectStorageClient, namespa
 	fmt.Printf("You have uploaded file %s in bucket %s\n",objectname,bucketname)
 	return err
 }
-
-
-
 func main() {
     //get compartment id from env as defaultconfigprovider don't have info	
 //	compartmentID := os.Getenv("OCI_COMPARTMENT_ID")
     Bucketname := flag.String("bucketname", "", "The name of bucket for file to upload ")
-	Filename := flag.String("filename", "", "The full path of file to be uploaded")
+	Filename := flag.String("filename", "", "The full path of files to be uploaded, wildcard can used ie: upload_files -bucketname testaa -filename \"filenam**\" ")
 	flag.Parse()
 	o, err := objectstorage.NewObjectStorageClientWithConfigurationProvider(common.DefaultConfigProvider())
 	if err != nil {
@@ -141,21 +137,32 @@ func main() {
 	  } else {
 	  fmt.Printf("You are going to upload file %s in bucket: %s\n",*Filename,*Bucketname)
 	  }
-		
 	
-	file,e := os.Open(*Filename)
-	defer file.Close()
-	filename := filepath.Base(*Filename)
-	fi,err1 := file.Stat()
-	  if err1 != nil {
-		fmt.Println("Error:", err1)
-		return
-		}
-	e = putObject(ctx, o, namespace, *Bucketname, filename, fi.Size(), file, nil)
-	if e != nil {
-		fmt.Println("Error:", e)
+	filename,err := filepath.Glob(*Filename)
+	if filename == nil {
+	   fmt.Println("Error: No files found to upload")
+	   }
+//	fmt.Println(*Filename)
+//	fmt.Println(filename)
+	if err != nil {
+		fmt.Println("Error:", err)
 		return
 		} 
+	for _, f := range filename {
+	  file,err := os.Open(f)
+	  if err != nil {
+		fmt.Println("Error:", err)
+		return
+		}
+	  defer file.Close()
+	  fi,err := file.Stat()
+	  fname := filepath.Base(f)
+	  err = putObject(ctx, o, namespace, *Bucketname, fname, fi.Size(), file, nil)
+	  if err != nil {
+		fmt.Println("Error:", err)
+		return
+		} 
+	}
 	return
 }
 ```
