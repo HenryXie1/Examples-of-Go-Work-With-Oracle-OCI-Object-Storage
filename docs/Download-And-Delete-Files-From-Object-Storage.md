@@ -56,7 +56,7 @@ func getListfiles(ctx context.Context, c objectstorage.ObjectStorageClient, name
 		filelist = append(filelist,*v.Name)
 		}
 	if filelist == nil {
-	   fmt.Println("Error: No files with prefix %s found in bucket %s to delete",prefix_files_name,bucketname)
+	   fmt.Printf("Error: No files with prefix %s found in bucket %s to delete",prefix_files_name,bucketname)
 		return nil
 		}
 //	fmt.Println(filelist)
