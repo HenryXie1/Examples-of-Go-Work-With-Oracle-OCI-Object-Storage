@@ -15,7 +15,6 @@ To install Oracle OCI Go sdk
  go get -u github.com/oracle/oci-go-sdk
 ```
 ###  Solution:
-
 ####  Delete multiple files example:
 ```
 package main
@@ -109,5 +108,9 @@ func main() {
 	}
 	return
 }
+```
+####  download multiple files example:
+```
+to be added
 ```
 [1]: http://www.henryxieblogs.com/2018/10/prepare-config-file-for-python3-oci-sdk.html
